@@ -710,6 +710,12 @@ body {
   color: var(--text-muted);
 }
 
+.footer-credits {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
 .dashboard-section .dashboard {
   opacity: 0.98;
 }
