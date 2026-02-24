@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethical Algorithm Simulator — Autonomous Vehicles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-layer" aria-hidden="true"></div>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="title">Ethical Algorithm Simulator</h1>
+      <p class="subtitle">Autonomous Vehicle Decision Engine</p>
+    </header>
+
+    <!-- Step 1: Scenario Overview -->
+    <section class="section scenario-section" id="scenarioSection">
+      <h2 class="section-title">1. Scenario Setup</h2>
+      <div class="scenario-card">
+        <div class="scenario-grid">
+          <div class="scenario-item scenario-input-group">
+            <label class="scenario-label" for="inputPassengers">Passengers in vehicle</label>
+            <input type="number" id="inputPassengers" class="scenario-input" min="0" max="10" value="2" aria-label="Number of passengers">
+          </div>
+          <div class="scenario-item scenario-input-group">
+            <label class="scenario-label" for="inputPedestrians">Pedestrians in path</label>
+            <input type="number" id="inputPedestrians" class="scenario-input" min="0" max="10" value="1" aria-label="Number of pedestrians">
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-label">Speed</span>
+            <span class="scenario-value">60 km/h</span>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-label">Brake failure probability</span>
+            <span class="scenario-value">20%</span>
+          </div>
+          <div class="scenario-item">
+            <span class="scenario-label">Scenario</span>
+            <span class="scenario-value">Pedestrian appears, obstacle on swerve path</span>
+          </div>
+        </div>
+        <p class="scenario-choices">Pedestrian suddenly appears in front of car. Obstacle blocks swerve path. AI must choose: <strong>Continue straight</strong> (hit pedestrian) · <strong>Swerve left</strong> (hit obstacle)</p>
+      </div>
+    </section>
+
+    <!-- Step 2: Mode Selection -->
+    <section class="section mode-section" id="modeSection">
+      <h2 class="section-title">2. Ethical Mode Selection</h2>
+      <div class="mode-grid">
+        <button type="button" class="mode-btn mode-utilitarian" onclick="selectMode('utilitarian')" data-mode="utilitarian">
+          <span class="mode-icon">⚖️</span>
+          <span class="mode-name">Utilitarian Mode</span>
+          <span class="mode-desc">Minimize total loss of life</span>
+        </button>
+        <button type="button" class="mode-btn mode-passenger" onclick="selectMode('passenger')" data-mode="passenger">
+          <span class="mode-icon">🛡️</span>
+          <span class="mode-name">Passenger Priority</span>
+          <span class="mode-desc">Protect occupants first</span>
+        </button>
+        <button type="button" class="mode-btn mode-pedestrian" onclick="selectMode('pedestrian')" data-mode="pedestrian">
+          <span class="mode-icon">🚶</span>
+          <span class="mode-name">Pedestrian Priority</span>
+          <span class="mode-desc">Protect vulnerable road users</span>
+        </button>
+      </div>
+      <p class="mode-hint" id="modeHint">Select an ethical framework to run the simulation.</p>
+    </section>
+
+    <!-- Run Simulation -->
+    <section class="section run-section" id="runSection">
+      <button type="button" class="run-btn" id="runBtn" onclick="runSimulation()" disabled>
+        Run Simulation
+      </button>
+    </section>
+
+    <!-- Step 3 & 7: Animation -->
+    <section class="section animation-section" id="animationSection">
+      <h2 class="section-title">3. Decision Processing & Animation</h2>
+      <div class="animation-stage" id="animationStage">
+        <div class="road">
+          <div class="road-stripes"></div>
+        </div>
+        <div class="pedestrians-wrap" id="pedestriansWrap"></div>
+        <div class="obstacle" id="obstacleEl"></div>
+        <div class="car" id="carEl">
+          <div class="car-body">
+            <div class="car-brake-lights" id="carBrakeLights"></div>
+          </div>
+          <div class="car-front"></div>
+          <div class="car-glow"></div>
+        </div>
+        <div class="impact-flash" id="impactFlash"></div>
+      </div>
+      <div class="processing-overlay" id="processingOverlay">
+        <div class="processing-spinner"></div>
+        <p class="processing-text">AI Decision Engine processing...</p>
+      </div>
+    </section>
+
+    <!-- Step 4–6: Outcome Dashboard -->
+    <section class="section dashboard-section" id="dashboardSection">
+      <h2 class="section-title">4. Outcome Dashboard</h2>
+      <div class="dashboard" id="dashboard">
+        <div class="dashboard-row dashboard-header">
+          <span class="dashboard-label">Ethical Mode</span>
+          <span class="dashboard-value" id="outcomeMode">—</span>
+        </div>
+        <div class="dashboard-row">
+          <span class="dashboard-label">Decision Taken</span>
+          <span class="dashboard-value highlight" id="outcomeDecision">—</span>
+        </div>
+        <div class="dashboard-divider"></div>
+        <div class="dashboard-row">
+          <span class="dashboard-label">Survivors</span>
+          <span class="dashboard-value" id="outcomeSurvivors">—</span>
+        </div>
+        <div class="dashboard-row survivors-detail">
+          <span class="dashboard-label">Passengers</span>
+          <span class="dashboard-value" id="outcomePassengers">—</span>
+        </div>
+        <div class="dashboard-row survivors-detail">
+          <span class="dashboard-label">Pedestrians</span>
+          <span class="dashboard-value" id="outcomePedestrian">—</span>
+        </div>
+        <div class="dashboard-divider"></div>
+        <div class="dashboard-row">
+          <span class="dashboard-label">Legal Liability</span>
+          <span class="dashboard-value" id="outcomeLiability">—</span>
+        </div>
+        <div class="dashboard-row">
+          <span class="dashboard-label">Public Reaction Index</span>
+          <span class="dashboard-value" id="outcomePublicTrust">—</span>
+        </div>
+        <div class="dashboard-row public-bar-row">
+          <div class="public-bar-wrap">
+            <div class="public-bar" id="publicBar"></div>
+          </div>
+        </div>
+        <div class="dashboard-row extras">
+          <span class="dashboard-label">Social sentiment</span>
+          <span class="dashboard-value" id="outcomeSentiment">—</span>
+        </div>
+        <div class="dashboard-row extras">
+          <span class="dashboard-label">Simulated stock impact</span>
+          <span class="dashboard-value" id="outcomeStock">—</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Ethical Algorithm Simulator for Autonomous Vehicles — Decision Engine Demo</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
