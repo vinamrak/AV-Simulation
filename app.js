@@ -30,13 +30,13 @@ const impactFlash = document.getElementById('impactFlash');
 const obstacleEl = document.getElementById('obstacleEl');
 const dashboardSection = document.getElementById('dashboardSection');
 
-// ——— Build pedestrian figures (up to 3 for display) ———
+// ——— Build pedestrian figures ———
 // Pedestrians cross the road vertically (from curb into car's path) when simulation runs
 function buildPedestrians(animate = false) {
   if (!pedestriansWrap) return;
-  const count = Math.min(3, getScenario().pedestrians);
+  const count = getScenario().pedestrians;
   pedestriansWrap.innerHTML = '';
-  const positions = [52, 58, 64]; // % from left — crossing points in the lane
+  const positions = count <= 1 ? [52] : Array.from({ length: count }, (_, i) => 48 + (i / (count - 1)) * 24);
   for (let i = 0; i < count; i++) {
     const ped = document.createElement('div');
     ped.className = 'pedestrian';
@@ -97,23 +97,10 @@ function getDecision(mode) {
 
 // ——— Step 4: Simulate outcome (survival %) ———
 function simulateOutcome(decision) {
-  let passengerSurvival, pedestrianSurvival;
-
   if (decision === 'Hit Pedestrian') {
-    pedestrianSurvival = 0;
-    passengerSurvival = 95;
-  } else {
-    pedestrianSurvival = 100;
-    passengerSurvival = 50;
+    return { pedestrianSurvival: 0, passengerSurvival: 100 };
   }
-
-  // Slight randomness for realism
-  passengerSurvival = Math.max(0, Math.min(100, passengerSurvival + (Math.random() * 10 - 5)));
-  if (decision !== 'Hit Pedestrian') {
-    pedestrianSurvival = Math.max(0, Math.min(100, pedestrianSurvival + (Math.random() * 6 - 3)));
-  }
-
-  return { passengerSurvival, pedestrianSurvival };
+  return { pedestrianSurvival: 100, passengerSurvival: 0 };
 }
 
 // ——— Step 5: Legal liability ———
