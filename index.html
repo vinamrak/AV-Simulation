@@ -25,19 +25,15 @@
         <div class="scenario-grid">
           <div class="scenario-item scenario-input-group">
             <label class="scenario-label" for="inputPassengers">Passengers in vehicle</label>
-            <input type="number" id="inputPassengers" class="scenario-input" min="0" max="10" value="2" aria-label="Number of passengers">
+            <input type="number" id="inputPassengers" class="scenario-input" min="1" max="10" value="2" aria-label="Number of passengers">
           </div>
           <div class="scenario-item scenario-input-group">
             <label class="scenario-label" for="inputPedestrians">Pedestrians in path</label>
-            <input type="number" id="inputPedestrians" class="scenario-input" min="0" max="10" value="1" aria-label="Number of pedestrians">
+            <input type="number" id="inputPedestrians" class="scenario-input" min="1" max="10" value="1" aria-label="Number of pedestrians">
           </div>
           <div class="scenario-item">
             <span class="scenario-label">Speed</span>
             <span class="scenario-value">60 km/h</span>
-          </div>
-          <div class="scenario-item">
-            <span class="scenario-label">Brake failure probability</span>
-            <span class="scenario-value">20%</span>
           </div>
           <div class="scenario-item">
             <span class="scenario-label">Scenario</span>
@@ -128,33 +124,12 @@
           <span class="dashboard-value" id="outcomePedestrian">—</span>
         </div>
         <div class="dashboard-divider"></div>
-        <div class="dashboard-row">
-          <span class="dashboard-label">Legal Liability</span>
-          <span class="dashboard-value" id="outcomeLiability">—</span>
-        </div>
-        <div class="dashboard-row">
-          <span class="dashboard-label">Public Reaction Index</span>
-          <span class="dashboard-value" id="outcomePublicTrust">—</span>
-        </div>
-        <div class="dashboard-row public-bar-row">
-          <div class="public-bar-wrap">
-            <div class="public-bar" id="publicBar"></div>
-          </div>
-        </div>
-        <div class="dashboard-row extras">
-          <span class="dashboard-label">Social sentiment</span>
-          <span class="dashboard-value" id="outcomeSentiment">—</span>
-        </div>
-        <div class="dashboard-row extras">
-          <span class="dashboard-label">Simulated stock impact</span>
-          <span class="dashboard-value" id="outcomeStock">—</span>
-        </div>
       </div>
     </section>
 
     <footer class="footer">
       <p>Ethical Algorithm Simulator for Autonomous Vehicles — Decision Engine Demo</p>
-      <p class="footer-credits">Created by Harinandana, Amritha, Vaanya, Pragnya and Shreya</p>
+      <p class="footer-credits">Created with &lt;3 by Harinandana, Amritha, Vaanya, Pragnya and Shreya</p>
     </footer>
   </div>
 
